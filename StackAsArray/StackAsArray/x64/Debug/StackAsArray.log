@@ -1,0 +1,3 @@
+﻿  main.cpp
+C:\Users\Mihajlo\Videos\_strukture_podataka\VS\StackAsArray\StackAsArray\main.cpp(16,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  StackAsArray.vcxproj -> C:\Users\Mihajlo\Videos\_strukture_podataka\VS\StackAsArray\x64\Debug\StackAsArray.exe

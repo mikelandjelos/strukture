@@ -1,0 +1,3 @@
+﻿  main.cpp
+C:\Users\Mihajlo\Videos\_strukture_podataka\VS\StackAsSLL_pesacki_preko_struct\StackAsSLL_pesacki_preko_struct\main.cpp(18,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  StackAsSLL_pesacki_preko_struct.vcxproj -> C:\Users\Mihajlo\Videos\_strukture_podataka\VS\StackAsSLL_pesacki_preko_struct\x64\Debug\StackAsSLL_pesacki_preko_struct.exe

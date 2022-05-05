@@ -1,0 +1,3 @@
+﻿  main.cpp
+C:\Users\Mihajlo\Videos\_strukture_podataka\VS\DLL_2put\DLL_2put\main.cpp(8,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  DLL_2put.vcxproj -> C:\Users\Mihajlo\Videos\_strukture_podataka\VS\DLL_2put\x64\Debug\DLL_2put.exe

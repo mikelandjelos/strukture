@@ -1,0 +1,7 @@
+﻿  main.cpp
+C:\Users\Mihajlo\Videos\_strukture_podataka\VS\DequeStaticImplementation\DequeStaticImplementation\main.cpp(14,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Mihajlo\Videos\_strukture_podataka\VS\DequeStaticImplementation\DequeStaticImplementation\StaticDeque.h(41,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Mihajlo\Videos\_strukture_podataka\VS\DequeStaticImplementation\DequeStaticImplementation\StaticDeque.h(39): message : while compiling class template member function 'StaticDeque<int>::StaticDeque(unsigned int)'
+C:\Users\Mihajlo\Videos\_strukture_podataka\VS\DequeStaticImplementation\DequeStaticImplementation\main.cpp(23): message : see reference to function template instantiation 'StaticDeque<int>::StaticDeque(unsigned int)' being compiled
+C:\Users\Mihajlo\Videos\_strukture_podataka\VS\DequeStaticImplementation\DequeStaticImplementation\main.cpp(23): message : see reference to class template instantiation 'StaticDeque<int>' being compiled
+  DequeStaticImplementation.vcxproj -> C:\Users\Mihajlo\Videos\_strukture_podataka\VS\DequeStaticImplementation\x64\Debug\DequeStaticImplementation.exe
