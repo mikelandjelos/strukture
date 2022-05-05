@@ -1,0 +1,7 @@
+﻿  main.cpp
+C:\Users\Mihajlo\Videos\_strukture_podataka\VS\QueueStaticImplementation\QueueStaticImplementation\main.cpp(14,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Mihajlo\Videos\_strukture_podataka\VS\QueueStaticImplementation\QueueStaticImplementation\StaticQueue.h(40,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Mihajlo\Videos\_strukture_podataka\VS\QueueStaticImplementation\QueueStaticImplementation\StaticQueue.h(38): message : while compiling class template member function 'StaticQueue<int>::StaticQueue(unsigned int)'
+C:\Users\Mihajlo\Videos\_strukture_podataka\VS\QueueStaticImplementation\QueueStaticImplementation\main.cpp(23): message : see reference to function template instantiation 'StaticQueue<int>::StaticQueue(unsigned int)' being compiled
+C:\Users\Mihajlo\Videos\_strukture_podataka\VS\QueueStaticImplementation\QueueStaticImplementation\main.cpp(23): message : see reference to class template instantiation 'StaticQueue<int>' being compiled
+  QueueStaticImplementation.vcxproj -> C:\Users\Mihajlo\Videos\_strukture_podataka\VS\QueueStaticImplementation\x64\Debug\QueueStaticImplementation.exe
