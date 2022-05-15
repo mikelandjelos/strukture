@@ -30,6 +30,9 @@ int main() {
     std::cout << "Postorder: ";
     br = t.postorder();
     std::cout << "(" << br << ")\n";
+    std::cout << "IPostorder: ";
+    br = BSTree<int>::iterativePostorder(t.getRoot());
+    std::cout << "(" << br << ")\n";
     std::cout << "Inorder: ";
     br = t.inorder();
     std::cout << "(" << br << ")\n";
