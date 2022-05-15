@@ -296,7 +296,7 @@ BSTNode<T>* BSTree<T>::findNode(T info) {
             return pok;
         if (*pok < info)
             pok = pok->right;
-        if (*pok > info)
+        else
             pok = pok->left;
     }
 
