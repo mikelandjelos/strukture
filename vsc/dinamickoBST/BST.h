@@ -150,17 +150,18 @@ private:
 
 template <class T>
 int BSTree<T>::iterativePreorder(BSTNode<T>* nd) {
-    std::stack<BSTNode<T>*> stek;
     int i = 0;
-    stek.push(nd);
-    while (nd != nullptr && !stek.empty()) {
-        nd = stek.top();
+    std::stack<BSTNode<T>*> stek;
+    BSTNode<T>* ptr = nd;
+    stek.push(ptr);
+    while (!stek.empty() && ptr != nullptr) {
+        ptr = stek.top();
         stek.pop();
-        BSTNode<T>::visit(nd), i++;
-        if (nd->right != nullptr)
-            stek.push(nd->right);
-        if (nd->left != nullptr)
-            stek.push(nd->left);
+        BSTNode<T>::visit(ptr), i++;
+        if (ptr->right != nullptr)
+            stek.push(ptr->right);
+        if (ptr->left != nullptr)
+            stek.push(ptr->left);
     }
     return i;
 }
