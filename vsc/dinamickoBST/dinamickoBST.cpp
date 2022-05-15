@@ -38,5 +38,13 @@ int main() {
 
     printTree(t.getRoot(), null, false);
 
+    std::cout << "\nKoji cvor zelite da izmenite: ";
+    std::cin >> n;
+
+    BSTNode<int>* ptr = t.findNode(n);
+    *ptr->info = 1024;
+
+    printTree(t.getRoot(), null, false);
+
     return 0;
 }

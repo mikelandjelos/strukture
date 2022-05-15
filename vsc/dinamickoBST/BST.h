@@ -45,7 +45,7 @@ public:
     template <typename K>
     friend bool operator<=(const BSTNode<K>& ndl, const K& val);
 
-    static bool visit(BSTNode<T>* nd);
+    static void visit(BSTNode<T>* nd);
     static bool isInternal(BSTNode<T>* nd);
 };
 
@@ -100,11 +100,10 @@ bool operator<=(const BSTNode<K>& ndl, const K& val) {
 }
 
 template <class T>
-bool BSTNode<T>::visit(BSTNode<T>* nd) {
+void BSTNode<T>::visit(BSTNode<T>* nd) {
     if (nd == nullptr)
-        return false;
+        std::cout << "nullptr" << ' ';
     std::cout << *nd->info << ' ';
-    return true;
 }
 
 template <class T>
@@ -128,7 +127,7 @@ public:
 
     // osnovne operacije
     void addNode(T info);
-    // BSTNode<T>* findNode(T info);
+    BSTNode<T>* findNode(T info);
 
     // traversal algoritmi
     int breadthTraversal();
@@ -170,6 +169,23 @@ void BSTree<T>::addNode(T info) {
     else
         pnd->left = new BSTNode<T>(info);
 
+}
+
+template <class T>
+BSTNode<T>* BSTree<T>::findNode(T info) {
+
+    BSTNode<T>* pok = root;
+
+    while (pok != nullptr) {
+        if (*pok == info)
+            return pok;
+        if (*pok < info)
+            pok = pok->right;
+        if (*pok > info)
+            pok = pok->left;
+    }
+
+    return nullptr;
 }
 
 template <class T>
