@@ -208,15 +208,22 @@ int BSTree<T>::iterativeInorder(BSTNode<T>* nd) {
     BSTNode<T>* ptr = nd;
     std::stack<BSTNode<T>*> stek;
     while (ptr != nullptr) {
+        // kretanje po krajnjem levom delu podstabla
+        // koje trenutno obradjujemo i upisivanje
+        // nd->right i nd na stek radi kasnije obrade
         while (ptr != nullptr) {
             if (ptr->right != nullptr)
                 stek.push(ptr->right);
             stek.push(ptr);
             ptr = ptr->left;
         }
+        // kada dodjemo do kraja naseg krajnjen levog puta
+        // popujemo element sa vrha
         ptr = stek.top();
         stek.pop();
         while (!stek.empty() && ptr->right == nullptr) {
+            // obradi element i iskoci iz petlje
+            // ukoliko ima desno podstablo
             BSTNode<int>::visit(ptr), i++;
             ptr = stek.top();
             stek.pop();
