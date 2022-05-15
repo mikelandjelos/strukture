@@ -33,6 +33,9 @@ int main() {
     std::cout << "Inorder: ";
     br = t.inorder();
     std::cout << "(" << br << ")\n";
+    std::cout << "IInorder: ";
+    br = BSTree<int>::iterativeInorder(t.getRoot());
+    std::cout << "(" << br << ")\n";
     std::cout << "Breadth: ";
     br = t.breadthTraversal();
     std::cout << "(" << br << ")\n";

@@ -136,6 +136,7 @@ public:
     int postorder();
     int inorder();
     static int iterativePreorder(BSTNode<T>* nd);
+    static int iterativeInorder(BSTNode<T>* nd);
 
     // misc
     BSTNode<T>* getRoot() { return root; }
@@ -198,6 +199,35 @@ int BSTree<T>::iterativePreorder(BSTNode<T>* nd) {
         if (ptr->left != nullptr)
             stek.push(ptr->left);
     }
+    return i;
+}
+
+template <class T>
+int BSTree<T>::iterativeInorder(BSTNode<T>* nd) {
+    int i = 0;
+    BSTNode<T>* ptr = nd;
+    std::stack<BSTNode<T>*> stek;
+    while (ptr != nullptr) {
+        while (ptr != nullptr) {
+            if (ptr->right != nullptr)
+                stek.push(ptr->right);
+            stek.push(ptr);
+            ptr = ptr->left;
+        }
+        ptr = stek.top();
+        stek.pop();
+        while (!stek.empty() && ptr->right == nullptr) {
+            BSTNode<int>::visit(ptr), i++;
+            ptr = stek.top();
+            stek.pop();
+        }
+        BSTNode<int>::visit(ptr), i++;
+        if (!stek.empty()) {
+            ptr = stek.top();
+            stek.pop();
+        }
+        else ptr = nullptr;
+    } 
     return i;
 }
 
