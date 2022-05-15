@@ -139,6 +139,7 @@ public:
 
     // misc
     BSTNode<T>* getRoot() { return root; }
+    BSTNode<T>* largestRightSubtree();
 
 private:
     int deletion();
@@ -149,12 +150,46 @@ private:
 };
 
 template <class T>
+BSTNode<T>* BSTree<T>::largestRightSubtree() {
+    BSTNode<T>* lrsnd = root, * ptr = root;
+    int imax = 0;
+    while (ptr != nullptr) {
+        if (ptr->right == nullptr) {
+            ptr = ptr->left;
+            continue;
+        }
+        std::stack<BSTNode<T>*> stek;
+        stek.push(ptr->right);
+        BSTNode<T>* iptr = ptr->right;
+        int i = 0;
+        while (!stek.empty()) {
+            i++; // visit
+            iptr = stek.top();
+            stek.pop();
+            if (iptr->right != nullptr)
+                stek.push(iptr->right);
+            if (iptr->left != nullptr)
+                stek.push(iptr->left);
+        }
+        if (i > imax) {
+            lrsnd = ptr;
+            imax = i;
+        }
+        ptr = ptr->left;
+    }
+    std::cout << "\n" << imax << "\n";
+    return lrsnd;
+}
+
+template <class T>
 int BSTree<T>::iterativePreorder(BSTNode<T>* nd) {
     int i = 0;
+    if (nd == nullptr)
+        return i;
     std::stack<BSTNode<T>*> stek;
     BSTNode<T>* ptr = nd;
     stek.push(ptr);
-    while (!stek.empty() && ptr != nullptr) {
+    while (!stek.empty()) {
         ptr = stek.top();
         stek.pop();
         BSTNode<T>::visit(ptr), i++;

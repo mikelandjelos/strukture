@@ -45,9 +45,14 @@ int main() {
     std::cin >> n;
 
     BSTNode<int>* ptr = t.findNode(n);
-    *ptr->info = 1024;
+    if (ptr != nullptr)
+        *ptr->info = 1024;
 
     printTree(t.getRoot(), null, false);
+
+    std::cout << "\n";
+    ptr = t.largestRightSubtree();
+    BSTNode<int>::visit(ptr);
 
     return 0;
 }
