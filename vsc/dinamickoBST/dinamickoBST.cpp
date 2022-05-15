@@ -50,7 +50,7 @@ int main() {
     // std::cout << "\nKoji cvor zelite da izmenite: ";
     // std::cin >> n;
 
-    ptr = t.findNode(n);
+    // ptr = t.findNode(n);
     // if (ptr != nullptr)
     //     *ptr->info = 1024;
 
