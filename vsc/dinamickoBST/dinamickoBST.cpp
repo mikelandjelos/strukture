@@ -47,14 +47,14 @@ int main() {
 
     printTree(t.getRoot(), null, false);
 
-    std::cout << "\nKoji cvor zelite da izmenite: ";
-    std::cin >> n;
+    // std::cout << "\nKoji cvor zelite da izmenite: ";
+    // std::cin >> n;
 
     BSTNode<int>* ptr = t.findNode(n);
-    if (ptr != nullptr)
-        *ptr->info = 1024;
+    // if (ptr != nullptr)
+    //     *ptr->info = 1024;
 
-    printTree(t.getRoot(), null, false);
+    // printTree(t.getRoot(), null, false);
 
     std::cout << "\n";
     ptr = t.largestRightSubtree();
