@@ -129,6 +129,8 @@ public:
     // osnovne operacije
     void addNode(T info);
     BSTNode<T>* findNode(T info);
+    int height();
+    int height(BSTNode<T>* nd);
 
     // traversal algoritmi
     int breadthTraversal();
@@ -150,6 +152,20 @@ private:
     void postorder(BSTNode<T>* nd, int& i);
     void inorder(BSTNode<T>* nd, int& i);
 };
+
+template <class T>
+int BSTree<T>::height() {
+    return height(root);
+}
+
+template <class T>
+int BSTree<T>::height(BSTNode<T>* nd) {
+    if (nd == nullptr)
+        return 0;
+    int l = height(nd->left);
+    int r = height(nd->right);
+    return (l > r) ? l + 1 : r + 1;
+}
 
 template <class T>
 BSTNode<T>* BSTree<T>::largestRightSubtree() {

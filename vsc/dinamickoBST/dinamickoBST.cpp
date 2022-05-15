@@ -56,9 +56,11 @@ int main() {
 
     // printTree(t.getRoot(), null, false);
 
-    std::cout << "\n";
+    std::cout << "\nNajvece desno podstablo (broj cvorova & njegov koren):";
     ptr = t.largestRightSubtree();
     BSTNode<int>::visit(ptr);
+
+    std::cout << "\nVisina: " << t.height() << "\n";
 
     return 0;
 }
