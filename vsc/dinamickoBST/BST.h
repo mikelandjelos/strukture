@@ -273,13 +273,13 @@ void BSTree<T>::addNode(T info) {
 
     while (cnd != nullptr) {
         pnd = cnd;
-        if (*cnd < info)
+        if (*cnd <= info)
             cnd = cnd->right;
         else
             cnd = cnd->left;
     }
 
-    if (*pnd < info)
+    if (*pnd <= info)
         pnd->right = new BSTNode<T>(info);
     else
         pnd->left = new BSTNode<T>(info);

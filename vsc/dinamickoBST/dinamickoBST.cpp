@@ -46,11 +46,11 @@ int main() {
     Trunk<int>* null = nullptr;
 
     printTree(t.getRoot(), null, false);
-
+    BSTNode<int>* ptr;
     // std::cout << "\nKoji cvor zelite da izmenite: ";
     // std::cin >> n;
 
-    BSTNode<int>* ptr = t.findNode(n);
+    ptr = t.findNode(n);
     // if (ptr != nullptr)
     //     *ptr->info = 1024;
 
