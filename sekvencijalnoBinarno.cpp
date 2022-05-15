@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <queue>
 #include <ctime>
 
 template <typename T>
@@ -48,6 +49,7 @@ public:
     Tree(Node<T>* root = nullptr) 
         : root(root) {}
     virtual ~Tree();
+    int breadthTraversal();
     int preorder();
     int postorder();
     int inorder();
@@ -58,6 +60,35 @@ private:
     void postorder(Node<T>* nd, int& i);
     void inorder(Node<T>* nd, int& i);
 };
+
+template <class T>
+int Tree<T>::breadthTraversal() {
+    std::queue<Node<T>*> q;
+    int i = 0;
+    Node<T>* ptr = root;
+    while (ptr != nullptr) {
+        Node<T>::visit(ptr);
+        i++;
+        if (ptr->left != nullptr)
+            q.push(ptr->left);
+        if (ptr->right != nullptr)
+            q.push(ptr->right);
+        if (!q.empty()) {
+            ptr = q.front();
+            q.pop();
+        }
+        else ptr = nullptr;
+    }
+    while (!q.empty()) {
+        ptr = q.front();
+        q.pop();
+        if (ptr != nullptr) {
+            Node<T>::visit(ptr);
+            i++;
+        }
+    }
+    return i;
+}
 
 template <class T>
 Tree<T>::~Tree() {
@@ -203,6 +234,9 @@ int main() {
     std::cout << "(" << br << ")\n";
     std::cout << "Inorder: ";
     br = t.inorder();
+    std::cout << "(" << br << ")\n";
+    std::cout << "Breadth: ";
+    br = t.breadthTraversal();
     std::cout << "(" << br << ")\n";
 
     printBT(a);
