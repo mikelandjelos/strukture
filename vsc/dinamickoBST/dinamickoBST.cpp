@@ -24,6 +24,9 @@ int main() {
     std::cout << "\nPreorder: ";
     int br = t.preorder();
     std::cout << "(" << br << ")\n";
+    std::cout << "IPreorder: ";
+    br = BSTree<int>::iterativePreorder(t.getRoot());
+    std::cout << "(" << br << ")\n";
     std::cout << "Postorder: ";
     br = t.postorder();
     std::cout << "(" << br << ")\n";

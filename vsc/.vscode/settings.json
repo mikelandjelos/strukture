@@ -62,6 +62,7 @@
         "xloctime": "cpp",
         "xtree": "cpp",
         "queue": "cpp",
-        "deque": "cpp"
+        "deque": "cpp",
+        "stack": "cpp"
     }
 }

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <queue>
+#include <stack>
 
 template <typename T>
 struct BSTNode {
@@ -134,6 +135,7 @@ public:
     int preorder();
     int postorder();
     int inorder();
+    static int iterativePreorder(BSTNode<T>* nd);
 
     // misc
     BSTNode<T>* getRoot() { return root; }
@@ -145,6 +147,23 @@ private:
     void postorder(BSTNode<T>* nd, int& i);
     void inorder(BSTNode<T>* nd, int& i);
 };
+
+template <class T>
+int BSTree<T>::iterativePreorder(BSTNode<T>* nd) {
+    std::stack<BSTNode<T>*> stek;
+    int i = 0;
+    stek.push(nd);
+    while (nd != nullptr && !stek.empty()) {
+        nd = stek.top();
+        stek.pop();
+        BSTNode<T>::visit(nd), i++;
+        if (nd->right != nullptr)
+            stek.push(nd->right);
+        if (nd->left != nullptr)
+            stek.push(nd->left);
+    }
+    return i;
+}
 
 template <class T>
 void BSTree<T>::addNode(T info) {
