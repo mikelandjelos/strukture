@@ -61,22 +61,30 @@ int main() {
 
     std::cout << "\nVisina: " << t.height() << "\n";
 brisanje:
-    std::cout << "\nKoji cvor zelite da obrisete: ";
-    std::cin >> n;
-    std::cout << t.deleteNode(n) << "\n";
-
+    t.incrementWhole();
+    std::cout << "\nInkrementirano:\n";
     printTree(t.getRoot(), null, false);
-    std::cout << "IInorder: ";
-    br = BSTree<int>::iterativeInorder(t.getRoot());
-    std::cout << "(" << br << ")\n";
+    std::vector<int> inStr;
+    auto iter = inStr.begin();
+    for (; iter < inStr.end(); iter++)
+        std::cout << *iter << " ";
+    std::cout << "\n";
+    // std::cout << "\nKoji cvor zelite da obrisete: ";
+    // std::cin >> n;
+    // std::cout << t.deleteNode(n) << "\n";
 
-    char ans;
+    // printTree(t.getRoot(), null, false);
+    // std::cout << "IInorder: ";
+    // br = BSTree<int>::iterativeInorder(t.getRoot());
+    // std::cout << "(" << br << ")\n";
 
-    std::cout << "Da li zelite da brisete jos cvorova(y/n): ";
-    std::cin >> ans;
+    // char ans;
 
-    if (ans == 'y')
-        goto brisanje;
+    // std::cout << "Da li zelite da brisete jos cvorova(y/n): ";
+    // std::cin >> ans;
+
+    // if (ans == 'y')
+    //     goto brisanje;
 
     return 0;
 }

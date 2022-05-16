@@ -2,6 +2,7 @@
 #include <string>
 #include <queue>
 #include <stack>
+#include <vector>
 
 template <typename T>
 struct BSTNode {
@@ -135,12 +136,14 @@ public:
 
     // traversal algoritmi
     int breadthTraversal();
+    void incrementWhole();
     int preorder();
     int postorder();
     int inorder();
     static int iterativePreorder(BSTNode<T>* nd);
     static int iterativeInorder(BSTNode<T>* nd);
     static int iterativePostorder(BSTNode<T>* nd);
+    static void incrementTree(BSTNode<T>* nd);
 
     // misc
     BSTNode<T>* getRoot() { return root; }
@@ -153,6 +156,20 @@ private:
     void postorder(BSTNode<T>* nd, int& i);
     void inorder(BSTNode<T>* nd, int& i);
 };
+
+template <class T>
+void BSTree<T>::incrementTree(BSTNode<T>* nd) {
+    if (nd == nullptr)
+        return;
+    ++*nd->info;
+    incrementTree(nd->left);
+    incrementTree(nd->right);
+}
+
+template <class T>
+void BSTree<T>::incrementWhole() {
+    BSTree<T>::incrementTree(root);
+}
 
 template <class T>
 bool BSTree<T>::deleteNode(T info) {
