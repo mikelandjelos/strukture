@@ -131,6 +131,7 @@ public:
     BSTNode<T>* findNode(T info);
     int height();
     int height(BSTNode<T>* nd);
+    bool deleteNode(T info);
 
     // traversal algoritmi
     int breadthTraversal();
@@ -152,6 +153,78 @@ private:
     void postorder(BSTNode<T>* nd, int& i);
     void inorder(BSTNode<T>* nd, int& i);
 };
+
+template <class T>
+bool BSTree<T>::deleteNode(T info) {
+    BSTNode<T>* parent = nullptr, *ptr = root, *node;
+    while (ptr != nullptr && *ptr->info != info) {
+        parent = ptr;
+        if (*ptr > info)
+            ptr = ptr->left;
+        else
+            ptr = ptr->right;
+    }
+    // nije nadjen
+    if (ptr == nullptr)
+        return false;
+    
+    node = ptr;
+
+    bool isLeft;
+    if (parent != nullptr)
+        isLeft = node == parent->left;
+
+    if (node->left == nullptr && node->right == nullptr) { // leaf
+        if (node != root)
+            if (*node < *parent)
+                parent->left = nullptr;
+            else
+                parent->right = nullptr;
+        else root = nullptr;
+        delete node;
+    }
+    else if (node->left == nullptr) { // nema levog potomka
+        if (node != root)
+            if (isLeft)
+                parent->left = node->right;
+            else
+                parent->right = node->right;
+        else root = root->right;
+        delete node;
+    }
+    else if (node->right == nullptr) { // nema desnog potomka
+        if (node != root)
+            if (isLeft)
+                parent->left = node->left;
+            else
+                parent->right = node->left;
+        else root = root->left;
+        delete node;
+    }
+    else { // ima oba potomka
+
+        parent = node, ptr = node->left;
+        // trazimo krajnjeg desnog u levom
+        // podstablu; on sigurno nece imati
+        // desno podstablo
+        while (ptr->right != nullptr) {
+            parent = ptr;
+            ptr = ptr->right;
+        }
+        delete node->info;
+        node->info = new T(*ptr->info);
+        // moze da se desi da je krajnji desni u levom
+        // podstablu upravo nas node->left
+        if (parent == node)
+            parent->left = ptr->left;
+        else
+            // kopiramo sadrzaj ptr-a
+            // u nas node
+            parent->right = ptr->left;
+
+    }
+    return true;
+}
 
 template <class T>
 int BSTree<T>::height() {

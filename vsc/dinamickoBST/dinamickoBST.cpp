@@ -13,7 +13,7 @@ int main() {
     std::cin >> n;
 
     BSTree<int> t;
-
+ 
     std::cout << "\nDodavanje: ";
     for (int i  = 0; i < n; ++i) {
         int temp = rand() % 100 - 50;
@@ -47,10 +47,9 @@ int main() {
 
     printTree(t.getRoot(), null, false);
     BSTNode<int>* ptr;
-    // std::cout << "\nKoji cvor zelite da izmenite: ";
-    // std::cin >> n;
+    
 
-    ptr = t.findNode(n);
+    //ptr = t.findNode(n);
     // if (ptr != nullptr)
     //     *ptr->info = 1024;
 
@@ -61,6 +60,23 @@ int main() {
     BSTNode<int>::visit(ptr);
 
     std::cout << "\nVisina: " << t.height() << "\n";
+brisanje:
+    std::cout << "\nKoji cvor zelite da obrisete: ";
+    std::cin >> n;
+    std::cout << t.deleteNode(n) << "\n";
+
+    printTree(t.getRoot(), null, false);
+    std::cout << "IInorder: ";
+    br = BSTree<int>::iterativeInorder(t.getRoot());
+    std::cout << "(" << br << ")\n";
+
+    char ans;
+
+    std::cout << "Da li zelite da brisete jos cvorova(y/n): ";
+    std::cin >> ans;
+
+    if (ans == 'y')
+        goto brisanje;
 
     return 0;
 }
