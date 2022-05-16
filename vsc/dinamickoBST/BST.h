@@ -140,22 +140,78 @@ public:
     int preorder();
     int postorder();
     int inorder();
+    void nodeDepths();
+    //void projectRight();
     static int iterativePreorder(BSTNode<T>* nd);
     static int iterativeInorder(BSTNode<T>* nd);
     static int iterativePostorder(BSTNode<T>* nd);
     static void incrementTree(BSTNode<T>* nd);
+    int deleteAllLeftLeafs();
+    static void deleteAllLeftLeafs(BSTNode<T>* root, BSTNode<T>* parent, int& i);
 
     // misc
     BSTNode<T>* getRoot() { return root; }
     BSTNode<T>* largestRightSubtree();
 
 private:
+    void projectRight(BSTNode<T>* nd, int d);
     int deletion();
+    void nodeDepths(BSTNode<T>* nd, int i);
     void deletion(BSTNode<T>* nd, int& i);
     void preorder(BSTNode<T>* nd, int& i);
     void postorder(BSTNode<T>* nd, int& i);
     void inorder(BSTNode<T>* nd, int& i);
 };
+
+// template <class T>
+// void BSTree<T>::projectRight() {
+//     int d = 0;
+//     projectRight(nd)
+// }
+
+// template <class T>
+// void BSTree<T>::projectRight(BSTNode<T>* nd, int d) {
+
+// }
+
+template <class T>
+int BSTree<T>::deleteAllLeftLeafs() {
+    int i = 0;
+    BSTree<T>::deleteAllLeftLeafs(root, nullptr, i);
+    return i;
+}
+
+template <class T>
+void BSTree<T>::deleteAllLeftLeafs(BSTNode<T>* root, BSTNode<T>* parent, int& i) {
+    if (parent == nullptr) {
+        deleteAllLeftLeafs(root->left, root, i);
+        deleteAllLeftLeafs(root->right, root, i);
+    }
+    if (root == nullptr)
+        return;
+    if (!root->left && !root->right && parent->left == root) {
+        parent->left = nullptr;
+        delete root;
+        i++;
+        return;
+    }
+    deleteAllLeftLeafs(root->left, root, i);
+    deleteAllLeftLeafs(root->right, root, i);
+}
+
+template <class T>
+void BSTree<T>::nodeDepths() {
+    nodeDepths(root, 0);
+}
+
+template <class T>
+void BSTree<T>::nodeDepths(BSTNode<T>* nd, int i) {
+    if (nd == nullptr)
+        return;
+    nodeDepths(nd->left, i + 1);
+    std::cout << *nd->info << ": " << i << "\n";
+    nodeDepths(nd->right, i + 1);
+}
 
 template <class T>
 void BSTree<T>::incrementTree(BSTNode<T>* nd) {

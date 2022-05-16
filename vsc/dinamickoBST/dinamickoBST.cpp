@@ -69,6 +69,10 @@ brisanje:
     for (; iter < inStr.end(); iter++)
         std::cout << *iter << " ";
     std::cout << "\n";
+    t.nodeDepths();
+    std::cout << "Cvorova obrisano: " << t.deleteAllLeftLeafs() << "\n";
+    printTree(t.getRoot(), null, false);
+
     // std::cout << "\nKoji cvor zelite da obrisete: ";
     // std::cin >> n;
     // std::cout << t.deleteNode(n) << "\n";
