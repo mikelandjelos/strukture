@@ -152,7 +152,7 @@ public:
     static void getSortedArray(BSTNode<T>* nd, T* arr = nullptr, int& i = 0);
     int deleteAllLeftLeafs();
     BSTNode<T>* bifurcationNode();
-    static void deleteAllLeftLeafs(BSTNode<T>* root, BSTNode<T>* parent, int& i);
+    static void deleteAllLeftLeaves(BSTNode<T>* root, BSTNode<T>* parent, int& i);
     static void bifurcationNode(BSTNode<T>* root, BSTNode<T>** bifNode, int& maxdiff);
     static void countNodes(BSTNode<T>* root, int& i);
 
@@ -249,15 +249,15 @@ void BSTree<T>::countNodes(BSTNode<T>* root, int& i) {
 template <class T>
 int BSTree<T>::deleteAllLeftLeafs() {
     int i = 0;
-    BSTree<T>::deleteAllLeftLeafs(root, nullptr, i);
+    BSTree<T>::deleteAllLeftLeaves(root, nullptr, i);
     return i;
 }
 
 template <class T>
-void BSTree<T>::deleteAllLeftLeafs(BSTNode<T>* root, BSTNode<T>* parent, int& i) {
+void BSTree<T>::deleteAllLeftLeaves(BSTNode<T>* root, BSTNode<T>* parent, int& i) {
     if (parent == nullptr) {
-        deleteAllLeftLeafs(root->left, root, i);
-        deleteAllLeftLeafs(root->right, root, i);
+        deleteAllLeftLeaves(root->left, root, i);
+        deleteAllLeftLeaves(root->right, root, i);
     }
     if (root == nullptr)
         return;
@@ -267,8 +267,8 @@ void BSTree<T>::deleteAllLeftLeafs(BSTNode<T>* root, BSTNode<T>* parent, int& i)
         i++;
         return;
     }
-    deleteAllLeftLeafs(root->left, root, i);
-    deleteAllLeftLeafs(root->right, root, i);
+    deleteAllLeftLeaves(root->left, root, i);
+    deleteAllLeftLeaves(root->right, root, i);
 }
 
 template <class T>
