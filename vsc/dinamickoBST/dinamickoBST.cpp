@@ -61,18 +61,32 @@ int main() {
 
     std::cout << "\nVisina: " << t.height() << "\n";
 brisanje:
-    t.incrementWhole();
-    std::cout << "\nInkrementirano:\n";
-    printTree(t.getRoot(), null, false);
-    std::vector<int> inStr;
-    auto iter = inStr.begin();
-    for (; iter < inStr.end(); iter++)
-        std::cout << *iter << " ";
-    std::cout << "\n";
-    t.nodeDepths();
-    std::cout << "Cvorova obrisano: " << t.deleteAllLeftLeafs() << "\n";
-    printTree(t.getRoot(), null, false);
+    // t.incrementWhole();
+    // std::cout << "\nInkrementirano:\n";
+    // printTree(t.getRoot(), null, false);
+    // std::vector<int> inStr;
+    // auto iter = inStr.begin();
+    // for (; iter < inStr.end(); iter++)
+    //     std::cout << *iter << " ";
+    // std::cout << "\n";
+    // t.nodeDepths();
+    // std::cout << "Cvorova obrisano: " << t.deleteAllLeftLeafs() << "\n";
+    // printTree(t.getRoot(), null, false);
+    BSTNode<int>* bifNode = t.bifurcationNode();
+    if (bifNode)
+        std::cout << *bifNode->info << "\n";
+    else
+        std::cout << "bifNode not found\n";
 
+    br = 0;
+    int* arr = new int[t.nodeCount()];
+    BSTree<int>::getSortedArray(t.getRoot(), arr, br);
+    for (int i = 0; i < t.nodeCount(); ++i)
+        std::cout <<  arr[i] << " ";
+
+    std::cout << "\n";
+    t.balance();
+    printTree(t.getRoot(), null, false);
     // std::cout << "\nKoji cvor zelite da obrisete: ";
     // std::cin >> n;
     // std::cout << t.deleteNode(n) << "\n";

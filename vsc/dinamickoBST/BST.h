@@ -120,11 +120,12 @@ template <typename T>
 class BSTree {
 private:
     BSTNode<T>* root;
+    int numOfNodes;
 public:
 
     // destruktor, konstruktor
     BSTree(BSTNode<T>* root = nullptr) 
-        : root(root) {}
+        : root(root), numOfNodes(0) {}
     virtual ~BSTree();
 
     // osnovne operacije
@@ -133,6 +134,7 @@ public:
     int height();
     int height(BSTNode<T>* nd);
     bool deleteNode(T info);
+    void balance();
 
     // traversal algoritmi
     int breadthTraversal();
@@ -142,15 +144,21 @@ public:
     int inorder();
     void nodeDepths();
     //void projectRight();
+    static void balance(BSTree<T>& nd, T* arr, int left, int right);
     static int iterativePreorder(BSTNode<T>* nd);
     static int iterativeInorder(BSTNode<T>* nd);
     static int iterativePostorder(BSTNode<T>* nd);
     static void incrementTree(BSTNode<T>* nd);
+    static void getSortedArray(BSTNode<T>* nd, T* arr = nullptr, int& i = 0);
     int deleteAllLeftLeafs();
+    BSTNode<T>* bifurcationNode();
     static void deleteAllLeftLeafs(BSTNode<T>* root, BSTNode<T>* parent, int& i);
+    static void bifurcationNode(BSTNode<T>* root, BSTNode<T>** bifNode, int& maxdiff);
+    static void countNodes(BSTNode<T>* root, int& i);
 
     // misc
     BSTNode<T>* getRoot() { return root; }
+    int nodeCount() { return numOfNodes; }
     BSTNode<T>* largestRightSubtree();
 
 private:
@@ -173,6 +181,70 @@ private:
 // void BSTree<T>::projectRight(BSTNode<T>* nd, int d) {
 
 // }
+
+template <class T>
+void BSTree<T>::balance() {
+    T* arr = new T[numOfNodes];
+    int i = 0;
+    BSTree<T>::getSortedArray(root, arr, i);
+    this->deletion();
+    BSTree<T>::balance(*this, arr, 0, i);
+    delete[] arr;
+}
+
+template <class T>
+void BSTree<T>::balance(BSTree<T>& nd, T* arr, int left, int right) {
+    if (left >= right)
+        return;
+    int s = (left + right) / 2;
+    nd.addNode(arr[s]);
+    BSTree<T>::balance(nd, arr, s + 1, right);
+    BSTree<T>::balance(nd, arr, left, s);
+}
+
+template <class T>
+void BSTree<T>::getSortedArray(BSTNode<T>* nd, T* arr, int& i) {
+    if (nd == nullptr)
+        return;
+    getSortedArray(nd->left, arr, i);
+    arr[i++] = *nd->info;
+    getSortedArray(nd->right, arr, i);
+}
+
+template <class T>
+BSTNode<T>* BSTree<T>::bifurcationNode() {
+    int diff = 0;
+    BSTNode<T>* maxNode = nullptr;
+    BSTree<T>::bifurcationNode(root, &maxNode, diff);
+    std::cout << "\nMaxDiff = " << diff << "\n";
+    return maxNode;
+}
+
+template <class T>
+void BSTree<T>::bifurcationNode(BSTNode<T>* root, BSTNode<T>** bifNode, int& maxdiff) {
+    if (root == nullptr)
+        return;
+    int ileft = 0, iright = 0;
+    BSTree<T>::countNodes(root->left, ileft);
+    BSTree<T>::countNodes(root->right, iright);
+    // diff = abs(iright - ileft);
+    int diff = ((ileft > iright) ? ileft - iright : iright - ileft);
+    if (diff >= maxdiff) {
+        maxdiff = diff;
+        *bifNode = root;
+    }
+    BSTree<T>::bifurcationNode(root->left, bifNode, maxdiff);
+    BSTree<T>::bifurcationNode(root->right, bifNode, maxdiff);
+}
+
+template <class T>
+void BSTree<T>::countNodes(BSTNode<T>* root, int& i) {
+    if (root == nullptr)
+        return;
+    i++;
+    countNodes(root->left, i);
+    countNodes(root->right, i);
+}
 
 template <class T>
 int BSTree<T>::deleteAllLeftLeafs() {
@@ -296,6 +368,7 @@ bool BSTree<T>::deleteNode(T info) {
             parent->right = ptr->left;
 
     }
+    numOfNodes--;
     return true;
 }
 
@@ -428,6 +501,7 @@ void BSTree<T>::addNode(T info) {
 
     if (root == nullptr) {
         root = new BSTNode<T>(info);
+        numOfNodes++;
         return;
     }
 
@@ -445,6 +519,8 @@ void BSTree<T>::addNode(T info) {
         pnd->right = new BSTNode<T>(info);
     else
         pnd->left = new BSTNode<T>(info);
+        
+    numOfNodes++;
 
 }
 
@@ -504,6 +580,7 @@ template <class T>
 int BSTree<T>::deletion() {
     int i = 0;
     deletion(root, i);
+    root = nullptr;
     return i;
 }
 
