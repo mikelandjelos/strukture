@@ -87,6 +87,9 @@ brisanje:
     std::cout << "\n";
     t.balance();
     printTree(t.getRoot(), null, false);
+    std::cout << "\nInorder: ";
+    br = t.inorder();
+    std::cout << "(" << br << ")\n";
     // std::cout << "\nKoji cvor zelite da obrisete: ";
     // std::cin >> n;
     // std::cout << t.deleteNode(n) << "\n";
