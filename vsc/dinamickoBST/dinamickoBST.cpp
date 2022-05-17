@@ -69,7 +69,10 @@ brisanje:
     // for (; iter < inStr.end(); iter++)
     //     std::cout << *iter << " ";
     // std::cout << "\n";
-    // t.nodeDepths();
+    std::cout << "Dubine cvorova:\n";
+    t.nodeDepths();
+    std::cout << "Visine cvorova:\n";
+    t.nodeHeights();
     // std::cout << "Cvorova obrisano: " << t.deleteAllLeftLeafs() << "\n";
     // printTree(t.getRoot(), null, false);
     BSTNode<int>* bifNode = t.bifurcationNode();
@@ -85,6 +88,7 @@ brisanje:
         std::cout <<  arr[i] << " ";
 
     std::cout << "\n";
+    std::cout << "\nMassOfLeaves: " << t.massOfLeaves() << "\n";
     t.balance();
     printTree(t.getRoot(), null, false);
     std::cout << "\nInorder: ";

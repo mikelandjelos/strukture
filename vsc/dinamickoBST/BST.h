@@ -143,6 +143,8 @@ public:
     int postorder();
     int inorder();
     void nodeDepths();
+    void nodeHeights();
+    int massOfLeaves();
     //void projectRight();
     static void balance(BSTree<T>& nd, T* arr, int left, int right);
     static int iterativePreorder(BSTNode<T>* nd);
@@ -162,9 +164,11 @@ public:
     BSTNode<T>* largestRightSubtree();
 
 private:
+    void massOfLeaves(BSTNode<T>* nd, int& m);
     void projectRight(BSTNode<T>* nd, int d);
     int deletion();
     void nodeDepths(BSTNode<T>* nd, int i);
+    int nodeHeights(BSTNode<T>* nd);
     void deletion(BSTNode<T>* nd, int& i);
     void preorder(BSTNode<T>* nd, int& i);
     void postorder(BSTNode<T>* nd, int& i);
@@ -181,6 +185,39 @@ private:
 // void BSTree<T>::projectRight(BSTNode<T>* nd, int d) {
 
 // }
+
+template <class T>
+int BSTree<T>::massOfLeaves() {
+    int m = 0;
+    BSTree<T>::massOfLeaves(root, m);
+    return m;
+}
+
+template <class T>
+void BSTree<T>::massOfLeaves(BSTNode<T>* nd, int& m) {
+    if (nd == nullptr)
+        return;
+    if (!nd->left && !nd->right)
+        m++;
+    massOfLeaves(nd->left, m);
+    massOfLeaves(nd->right, m);
+}
+
+template <class T>
+void BSTree<T>::nodeHeights() {
+    BSTree<T>::nodeHeights(root);
+}
+
+template <class T>
+int BSTree<T>::nodeHeights(BSTNode<T>* nd) {
+    if (nd == nullptr)
+        return 0;
+    int hl = nodeHeights(nd->left),
+        hr = nodeHeights(nd->right);
+    int h = 1 + ((hl > hr) ? hl : hr);
+    std::cout << *nd->info << ": " << h << "\n";
+    return h;
+}
 
 template <class T>
 void BSTree<T>::balance() {
@@ -273,7 +310,7 @@ void BSTree<T>::deleteAllLeftLeaves(BSTNode<T>* root, BSTNode<T>* parent, int& i
 
 template <class T>
 void BSTree<T>::nodeDepths() {
-    nodeDepths(root, 0);
+    nodeDepths(root, 1);
 }
 
 template <class T>
