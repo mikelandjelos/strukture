@@ -92,13 +92,20 @@ brisanje:
     std::cout << "\nInorder: ";
     br = t.inorder();
     std::cout << "(" << br << ")\n";
-    t.invertTree();
-    printTree(t.getRoot(), null, false);
-    t.balance();
+    // t.invertTree();
+    // printTree(t.getRoot(), null, false);
+    // t.balance();
     printTree(t.getRoot(), null, false);
     
-    // std::cout << "\nKoji cvor zelite da obrisete: ";
+    // std::cout << "\nDubina kog cvora vas zanima: ";
     // std::cin >> n;
+    // std::cout << t.getDepth(n) << "\n";
+    BSTNode<int>* maxcs = t.maxChildSum();
+    if (maxcs)
+        std::cout << "Maxsum cvor: " << *maxcs->info << "\n";
+     BSTNode<int>* minnd = t.getMinNode();
+     if (minnd)
+        std::cout << "Minnode cvor: " << *minnd->info << "\n";
     // std::cout << t.deleteNode(n) << "\n";
 
     // printTree(t.getRoot(), null, false);

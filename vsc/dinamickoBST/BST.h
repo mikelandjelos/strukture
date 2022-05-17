@@ -146,6 +146,12 @@ public:
     void nodeDepths();
     void nodeHeights();
     int massOfLeaves();
+    int getDepth(T p);
+    void getDepth(BSTNode<T>* nd, const T& val, bool& found, int& h, int i = 0);
+    BSTNode<T>* getMinNode();
+    void getMinNode(BSTNode<T>* nd, BSTNode<T>** minnd);
+    BSTNode<T>* maxChildSum();
+    int maxChildSum(BSTNode<T>* nd, BSTNode<T>** maxnd, int& maxsum);
     //void projectRight();
     static void balance(BSTree<T>& nd, T* arr, int left, int right);
     static int iterativePreorder(BSTNode<T>* nd);
@@ -187,6 +193,73 @@ private:
 // void BSTree<T>::projectRight(BSTNode<T>* nd, int d) {
 
 // }
+
+template <class T>
+BSTNode<T>* BSTree<T>::getMinNode() {
+    BSTNode<T>* minnd = nullptr;
+    getMinNode(root, &minnd);
+    return minnd;
+}
+
+template <class T>
+void BSTree<T>::getMinNode(BSTNode<T>* nd, BSTNode<T>** minnd) {
+    if (nd == nullptr)
+        return;
+    if (*minnd == nullptr || *nd->info < *(*minnd)->info)
+        *minnd = nd;
+    getMinNode(nd->left, minnd);
+    getMinNode(nd->right, minnd);
+}
+
+template <class T>
+BSTNode<T>* BSTree<T>::maxChildSum() {
+    BSTNode<T>* maxnd = nullptr;
+    int maxsum = 0;
+    maxChildSum(root, &maxnd, maxsum);
+    std::cout << "\nMaxsum = " << maxsum << "\n";
+    return maxnd;
+}
+
+template <class T>
+int BSTree<T>::maxChildSum(BSTNode<T>* nd, BSTNode<T>** maxnd, int& maxsum) {
+    if (nd == nullptr)
+        return 0;
+    int childsum = 0;
+    childsum += maxChildSum(nd->left, maxnd, maxsum);
+    childsum += maxChildSum(nd->right, maxnd, maxsum);
+    if (nd->left)
+        childsum += *nd->left->info;
+    if (nd->right)
+        childsum += *nd->right->info;
+    if (childsum > maxsum) {
+        maxsum = childsum;
+        *maxnd = nd;
+    }
+    return childsum;
+}
+
+template <class T>
+int BSTree<T>::getDepth(T p) {
+    bool found = false;
+    int i = 1, h = -1;
+    if (root == nullptr)
+        return h;
+    getDepth(root, p, found, h, 1);
+    return h;
+}
+
+template <class T>
+void BSTree<T>::getDepth(BSTNode<T>* nd, const T& val, bool& found, int& h, int i) {
+    if (nd == nullptr || found)
+        return;
+    if (*nd->info == val) {
+        h = i;
+        found = true;
+        return;
+    }
+    getDepth(nd->left, val, found, h, i + 1);
+    getDepth(nd->right, val, found, h, i + 1);
+}
 
 template <class T>
 void BSTree<T>::invertTree() {
