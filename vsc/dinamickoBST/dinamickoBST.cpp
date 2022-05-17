@@ -121,5 +121,26 @@ brisanje:
     // if (ans == 'y')
     //     goto brisanje;
 
+    BSTree<int> t1;
+
+    for (int i = 0; i <= 10; ++i)
+        t1.addNode((i % 2 ? -i : i));
+
+    printTree(t1.getRoot(), null, false);
+    std::cout << "\n\n";
+
+    t1.xchgSpecificNodes(t1.getRoot());
+
+    printTree(t1.getRoot(), null, false);
+    std::cout << "\n\n";
+
+    printTree(t.getRoot(), null, false);
+    std::cout << "\n\n";
+
+    t.xchgSpecificNodes(t.getRoot());
+
+    printTree(t.getRoot(), null, false);
+    std::cout << "\n\n";
+
     return 0;
 }
