@@ -135,6 +135,7 @@ public:
     int height(BSTNode<T>* nd);
     bool deleteNode(T info);
     void balance();
+    void invertTree();
 
     // traversal algoritmi
     int breadthTraversal();
@@ -164,6 +165,7 @@ public:
     BSTNode<T>* largestRightSubtree();
 
 private:
+    void invertTree(BSTNode<T>* nd);
     void massOfLeaves(BSTNode<T>* nd, int& m);
     void projectRight(BSTNode<T>* nd, int d);
     int deletion();
@@ -185,6 +187,22 @@ private:
 // void BSTree<T>::projectRight(BSTNode<T>* nd, int d) {
 
 // }
+
+template <class T>
+void BSTree<T>::invertTree() {
+    invertTree(root);
+}
+
+template <class T>
+void BSTree<T>::invertTree(BSTNode<T>* nd) {
+    if (nd == nullptr)
+        return;
+    BSTNode<T>* tmp = nd->left;
+    nd->left = nd->right;
+    nd->right = tmp;
+    invertTree(nd->left);
+    invertTree(nd->right);
+}
 
 template <class T>
 int BSTree<T>::massOfLeaves() {

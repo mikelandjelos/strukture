@@ -89,11 +89,14 @@ brisanje:
 
     std::cout << "\n";
     std::cout << "\nMassOfLeaves: " << t.massOfLeaves() << "\n";
-    t.balance();
-    printTree(t.getRoot(), null, false);
     std::cout << "\nInorder: ";
     br = t.inorder();
     std::cout << "(" << br << ")\n";
+    t.invertTree();
+    printTree(t.getRoot(), null, false);
+    t.balance();
+    printTree(t.getRoot(), null, false);
+    
     // std::cout << "\nKoji cvor zelite da obrisete: ";
     // std::cin >> n;
     // std::cout << t.deleteNode(n) << "\n";
