@@ -222,8 +222,8 @@ void BSTree<T>::xchgSpecificNodes(BSTNode<T>* nd, BSTNode<T>* parent) {
         xchgSpecificNodes(lnd->right, lnd);
     }
     else {
-            xchgSpecificNodes(nd->left, nd);
-            xchgSpecificNodes(nd->right, nd);
+        xchgSpecificNodes(nd->left, nd);
+        xchgSpecificNodes(nd->right, nd);
     }
 }
 

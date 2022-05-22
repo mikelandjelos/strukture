@@ -124,7 +124,13 @@ brisanje:
     BSTree<int> t1;
 
     for (int i = 0; i <= 10; ++i)
-        t1.addNode((i % 2 ? -i : i));
+        if (i % 2 == 0)
+            t1.addNode(-i);
+
+    t1.addNode(15);
+
+    for (int i = 10; i > 0; --i)
+        t1.addNode(i);
 
     printTree(t1.getRoot(), null, false);
     std::cout << "\n\n";
@@ -134,13 +140,13 @@ brisanje:
     printTree(t1.getRoot(), null, false);
     std::cout << "\n\n";
 
-    printTree(t.getRoot(), null, false);
-    std::cout << "\n\n";
+    // printTree(t.getRoot(), null, false);
+    // std::cout << "\n\n";
 
-    t.xchgSpecificNodes(t.getRoot());
+    // t.xchgSpecificNodes(t.getRoot());
 
-    printTree(t.getRoot(), null, false);
-    std::cout << "\n\n";
+    // printTree(t.getRoot(), null, false);
+    // std::cout << "\n\n";
 
     return 0;
 }
