@@ -369,13 +369,21 @@ void Graph::previousReset() {
 
 unsigned int Graph::findShorterPath(int _start, int _frst, int _scnd) {
 
-    // ovo moze mnogo efikasnije (sve u jednom prolazu, narednih 5 linija)
-    // ali me mrzi i nije svrha zadatka
-    previousReset();
-    statusReset();
-    Vertex* _startVert = findVertex(_start);
-    Vertex* _frstVert = findVertex(_frst);
-    Vertex* _scndVert = findVertex(_scnd);
+    Vertex* _tmpVert = vertices;
+    Vertex* _startVert = nullptr, 
+        * _frstVert = nullptr, 
+        * _scndVert = nullptr;
+    while (_tmpVert != nullptr) {
+        if (_startVert == nullptr && _tmpVert->data == _start)
+            _startVert = _tmpVert;
+        if (_frstVert == nullptr && _tmpVert->data == _frst)
+            _frstVert = _tmpVert;
+        if (_scndVert == nullptr && _tmpVert->data == _scnd)
+            _scndVert = _tmpVert;
+        _tmpVert->prev = nullptr;
+        _tmpVert->status = 0;
+        _tmpVert = _tmpVert->next;
+    }
 
     if (!_startVert)
         return ~0U;
@@ -383,7 +391,6 @@ unsigned int Graph::findShorterPath(int _start, int _frst, int _scnd) {
     std::queue<Vertex*> q;
     q.push(_startVert);
     _startVert->status = 1; // processing
-    Vertex* _tmpVert;
     while (!q.empty()) {
         _tmpVert = q.front();
         q.pop();
@@ -411,7 +418,7 @@ unsigned int Graph::findShorterPath(int _start, int _frst, int _scnd) {
     if (!found)
         return ~0U;
 
-    int pathLen = 0U;
+    int pathLen = ~0U; // ponasa se kao -1
 
     std::stack<Vertex*> s;
     while (_tmpVert != nullptr) {

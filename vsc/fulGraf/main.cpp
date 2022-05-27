@@ -108,11 +108,15 @@ int main() {
     fsp.insertEdge(2, 6, 1);
     fsp.insertEdge(2, 15, 1);
     fsp.insertEdge(15, 12, 1);
+    // fsp.insertEdge(15, 7, 1);
     fsp.insertEdge(6, 8, 1);
     fsp.insertEdge(8, 12, 1);
     fsp.insertEdge(12, 13, 1);
 
-    fsp.findShorterPath(7, 1, 8);
+    fsp.print();
+    std::cout << "\n";
+    fsp.findShorterPath(2, 13, 1);
+    std::cout << "\n";
 
 #endif // !FINDSHORTERPATH
 
