@@ -5,9 +5,11 @@
 // #define SEARCHING_TEST
 // #define BFS_TEST
 // #define DFS_TEST
+// #define RECURSIVEDFS
 // #define TOPOLOGICAL_TEST
 // #define FINDSHORTERPATH
-#define FINDPATHBYPASSINGEDGE
+// #define FINDPATHBYPASSINGEDGE
+#define FINDCYCLEINCLUDINGVERTEX
 
 int main() {
 
@@ -152,6 +154,61 @@ int main() {
     fpbe.findPathBypassingEdge(7, 12, 1, 2);
 
 #endif // !FINDPATHBYPASSINGEDGE
+
+#ifdef RECURSIVEDFS
+
+    Graph traversals;
+
+    for (int i = 1; i <= 12; ++i)
+        traversals.insertVertex(i);
+
+    traversals.insertEdge(1, 4, 1);
+    traversals.insertEdge(1, 3, 1);
+    traversals.insertEdge(1, 2, 1);
+    traversals.insertEdge(2, 6, 1);
+    traversals.insertEdge(2, 5, 1);
+    traversals.insertEdge(3, 8, 1);
+    traversals.insertEdge(3, 7, 1);
+    traversals.insertEdge(4, 9, 1);
+    traversals.insertEdge(5, 10, 1);
+    traversals.insertEdge(6, 11, 1);
+    traversals.insertEdge(6, 4, 1);
+    traversals.insertEdge(9, 12, 1);
+    traversals.insertEdge(4, 1, 1);
+
+    std::cout << "\nBFS: ";
+    traversals.breadthTraversal(1);
+    std::cout << "\nDFS: ";
+    traversals.depthTraversal(1);
+    std::cout << "\nDFSr: ";
+    traversals.depthTraversalRecursive(1);
+
+#endif // !RECURSIVEDFS
+
+#ifdef FINDCYCLEINCLUDINGVERTEX
+
+    Graph fciv;
+
+    fciv.insertVertex(1);
+    fciv.insertVertex(5);
+    fciv.insertVertex(7);
+    fciv.insertVertex(2);
+    fciv.insertVertex(8);
+    fciv.insertVertex(3);
+    fciv.insertVertex(6);
+
+    fciv.insertEdge(1, 7, 1);
+    fciv.insertEdge(7, 2, 1);
+    fciv.insertEdge(7, 3, 1);
+    fciv.insertEdge(2, 12, 1);
+    fciv.insertEdge(3, 6, 1);
+    fciv.insertEdge(8, 2, 1);
+    fciv.insertEdge(6, 8, 1);
+    fciv.insertEdge(12, 1, 1);
+
+    std::cout << fciv.findCycleIncludingVertex(1);
+
+#endif // !FINDCYCLEINCLUDINGVERTEX
 
     return 0;
     

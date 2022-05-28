@@ -91,6 +91,7 @@ public:
     bool deleteEdge(int _dataA, int _dataB);
     unsigned int breadthTraversal(int _start);
     unsigned int depthTraversal(int _start);
+    unsigned int depthTraversalRecursive(int _start);
     unsigned int topologicalOrderTraversal(bool _visit = false);
     bool isCyclic();
     void print() const;
@@ -101,12 +102,17 @@ private:
     void findVertices(Vertex** ptrA, Vertex** ptrB, int _dataA, int _dataB);
     void statusReset();
     void previousReset();
+    void depthTraversalRecursive(Vertex* _vertex, int& _numVisited);
 
 public:
     // zadaci
     unsigned int findShorterPath(int _start, int _frst, int _scnd);
     unsigned int findPathBypassingEdge(int _start, int _end, int _frstBy, int _scndBy);
+    unsigned int findCycleIncludingVertex(int _data);
 
+private:
+    // pomocne funkcije
+    void findCycleIncludingVertex(Vertex* _vertex, bool& found, int& len, int _data);
 };
 
 Graph::Graph()
@@ -326,6 +332,34 @@ unsigned int Graph::depthTraversal(int _start) {
     return numVisited;
 }
 
+unsigned int Graph::depthTraversalRecursive(int _start) {
+    Vertex* _startVert = nullptr, *_tempVert = vertices;
+    while (_tempVert != nullptr) {
+        if (!_startVert && _tempVert->data == _start)
+            _startVert = _tempVert;
+        _tempVert->status = 0;
+        _tempVert = _tempVert->next;
+    }
+    int _numVisited = 0;
+    if (_startVert != nullptr)
+        depthTraversalRecursive(_startVert, _numVisited);
+    return _numVisited;
+}
+
+void Graph::depthTraversalRecursive(Vertex* _vertex, int& _numVisited) {
+    if (_vertex->status != 0) // processed/processing
+        return;
+    _vertex->visit();
+    _vertex->status = 2; // processed
+    _numVisited++;
+    Edge* _tempAdj = _vertex->adj;
+    while (_tempAdj != nullptr) {
+        if (_tempAdj->dest->status == 0)
+            depthTraversalRecursive(_tempAdj->dest, _numVisited);
+        _tempAdj = _tempAdj->link;
+    }
+}
+
 unsigned int Graph::topologicalOrderTraversal(bool _visit) {
     int numVisited = 0U;
     Vertex* _tmpVert = vertices;
@@ -501,6 +535,51 @@ unsigned int Graph::findPathBypassingEdge(int _start, int _end, int _frstBy, int
 
     return pathLen;
 
+}
+
+unsigned int Graph::findCycleIncludingVertex(int _data) {
+    Vertex* _vertex = nullptr, * _tmpVert = vertices;
+    while (_tmpVert != nullptr) {
+        if (!_vertex && _tmpVert->data == _data)
+            _vertex = _tmpVert;
+        _tmpVert->status = 0; // unprocessed
+        _tmpVert = _tmpVert->next;
+    }
+    if (!_vertex)
+        return ~0U;
+    int len = -1;
+    bool found = false;
+    findCycleIncludingVertex(_vertex, found, len, _data);
+    return len;
+}
+
+void Graph::findCycleIncludingVertex(Vertex* _vertex, bool& found, int& len, int _data) {
+    if (_vertex->status != 0)
+        return;
+    _vertex->status = 2; // processed
+    Edge* _tmpAdj = _vertex->adj;
+    while (_tmpAdj != nullptr) {
+        // ako nije loop poteg (A->A) i ako _vertex->_start
+        // znaci da smo se vratili u _start => nasli smo ciklus
+        // sada samo treba da odradimo backtracking do pocetnog cvora
+        // i ispisemo putanju unazad!
+        if (_tmpAdj->dest->data == _data && _vertex != _tmpAdj->dest) {
+            found = true;
+            _vertex->visit();
+            _vertex->status = 2;
+            len++;
+            return;
+        }
+        else if (_tmpAdj->dest->status == 0) {
+            findCycleIncludingVertex(_tmpAdj->dest, found, len, _data);
+            if (found) {
+                _vertex->visit();
+                len++;
+                return;
+            }
+        }
+        _tmpAdj = _tmpAdj->link;
+    }
 }
 
 #endif // !GRAPH_H
