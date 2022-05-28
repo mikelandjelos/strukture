@@ -153,7 +153,7 @@ public:
     BSTNode<T>* maxChildSum();
     int maxChildSum(BSTNode<T>* nd, BSTNode<T>** maxnd, int& maxsum);
     void xchgSpecificNodes(BSTNode<T>* nd);
-    void xchgSpecificNodes(BSTNode<T>* nd, BSTNode<T>* parent);
+    void rearrangeSpecificNodes(BSTNode<T>* nd, BSTNode<T>* parent);
     //void projectRight();
     static void balance(BSTree<T>& nd, T* arr, int left, int right);
     static int iterativePreorder(BSTNode<T>* nd);
@@ -198,11 +198,11 @@ private:
 
 template <class T>
 void BSTree<T>::xchgSpecificNodes(BSTNode<T>* nd) {
-    xchgSpecificNodes(nd, nullptr);
+    rearrangeSpecificNodes(nd, nullptr);
 }
 
 template <class T>
-void BSTree<T>::xchgSpecificNodes(BSTNode<T>* nd, BSTNode<T>* parent) {
+void BSTree<T>::rearrangeSpecificNodes(BSTNode<T>* nd, BSTNode<T>* parent) {
     if (!nd) // ako smo stigli do dna
         return;
     // ako nd nema levo podstablo
@@ -218,12 +218,12 @@ void BSTree<T>::xchgSpecificNodes(BSTNode<T>* nd, BSTNode<T>* parent) {
             if (parent->left == nd)
                 parent->left = lnd;
             else parent->right = lnd;
-        xchgSpecificNodes(lnd->left, lnd);
-        xchgSpecificNodes(lnd->right, lnd);
+        rearrangeSpecificNodes(lnd->left, lnd);
+        rearrangeSpecificNodes(lnd->right, lnd);
     }
     else {
-        xchgSpecificNodes(nd->left, nd);
-        xchgSpecificNodes(nd->right, nd);
+        rearrangeSpecificNodes(nd->left, nd);
+        rearrangeSpecificNodes(nd->right, nd);
     }
 }
 

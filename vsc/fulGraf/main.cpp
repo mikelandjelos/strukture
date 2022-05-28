@@ -6,7 +6,8 @@
 // #define BFS_TEST
 // #define DFS_TEST
 // #define TOPOLOGICAL_TEST
-#define FINDSHORTERPATH
+// #define FINDSHORTERPATH
+#define FINDPATHBYPASSINGEDGE
 
 int main() {
 
@@ -119,6 +120,12 @@ int main() {
     std::cout << "\n";
 
 #endif // !FINDSHORTERPATH
+
+#ifdef FINDPATHBYPASSINGEDGE
+
+    
+
+#endif // !FINDPATHBYPASSINGEDGE
 
     return 0;
     
