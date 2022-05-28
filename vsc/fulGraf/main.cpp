@@ -190,13 +190,14 @@ int main() {
     Graph fciv;
 
     fciv.insertVertex(1);
-    fciv.insertVertex(5);
+    fciv.insertVertex(12);
     fciv.insertVertex(7);
     fciv.insertVertex(2);
     fciv.insertVertex(8);
     fciv.insertVertex(3);
     fciv.insertVertex(6);
 
+    fciv.insertEdge(1, 1, 1);
     fciv.insertEdge(1, 7, 1);
     fciv.insertEdge(7, 2, 1);
     fciv.insertEdge(7, 3, 1);
@@ -207,6 +208,7 @@ int main() {
     fciv.insertEdge(12, 1, 1);
 
     std::cout << fciv.findCycleIncludingVertex(1);
+    std::cout << "\n" << fciv.findCycleIncludingVertexIterative(1);
 
 #endif // !FINDCYCLEINCLUDINGVERTEX
 

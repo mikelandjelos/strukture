@@ -109,6 +109,7 @@ public:
     unsigned int findShorterPath(int _start, int _frst, int _scnd);
     unsigned int findPathBypassingEdge(int _start, int _end, int _frstBy, int _scndBy);
     unsigned int findCycleIncludingVertex(int _data);
+    unsigned int findCycleIncludingVertexIterative(int _data);
 
 private:
     // pomocne funkcije
@@ -580,6 +581,62 @@ void Graph::findCycleIncludingVertex(Vertex* _vertex, bool& found, int& len, int
         }
         _tmpAdj = _tmpAdj->link;
     }
+}
+
+unsigned int Graph::findCycleIncludingVertexIterative(int _data) {
+
+    Vertex* _tmpVert = vertices, 
+        * _startVert = nullptr;
+
+    while (_tmpVert != nullptr) {
+        if (!_startVert && _tmpVert->data == _data)
+            _startVert = _tmpVert;
+        _tmpVert->prev = nullptr;
+        _tmpVert->status = 0; // unprocessed
+        _tmpVert = _tmpVert->next;
+    }
+
+    if (!_startVert)
+        return ~0U;
+
+    _tmpVert = _startVert;
+    _tmpVert->status = 1;
+    std::stack<Vertex*> s;
+    s.push(_tmpVert);
+    bool found = false;
+    int len = ~0U;
+
+    while (!s.empty() && !found) {
+        _tmpVert = s.top();
+        s.pop();
+        _tmpVert->status = 2; // processed
+        Edge* _tmpAdj = _tmpVert->adj;
+        while (_tmpAdj != nullptr) {
+            if (_tmpAdj->dest == _startVert && _tmpVert != _startVert) {
+                found = true;
+                // _tmpAdj->dest->prev = _tmpVert;
+                // _tmpVert = _tmpAdj->dest;
+                break;
+            }
+            else if (_tmpAdj->dest->status == 0)
+                s.push(_tmpAdj->dest),
+                    _tmpAdj->dest->status = 1,
+                    _tmpAdj->dest->prev = _tmpVert;
+            _tmpAdj = _tmpAdj->link;
+        }
+    }
+
+    if (!found)
+        return ~0U;
+
+    while (_tmpVert != nullptr) {
+        _tmpVert->visit();
+        len++;
+        _tmpVert = _tmpVert->prev;
+    }
+
+    return len;
+
 }
 
 #endif // !GRAPH_H
