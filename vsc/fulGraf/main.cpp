@@ -123,7 +123,33 @@ int main() {
 
 #ifdef FINDPATHBYPASSINGEDGE
 
-    
+    Graph fpbe;
+
+    fpbe.insertVertex(7);
+    fpbe.insertVertex(3);
+    fpbe.insertVertex(1);
+    fpbe.insertVertex(6);
+    fpbe.insertVertex(2);
+    fpbe.insertVertex(12);
+    fpbe.insertVertex(5);
+    fpbe.insertVertex(8);
+
+    fpbe.insertEdge(7, 3, 1);
+    fpbe.insertEdge(7, 1, 1);
+    fpbe.insertEdge(3, 1, 1);
+    fpbe.insertEdge(3, 6, 1);
+    fpbe.insertEdge(1, 2, 1);
+    fpbe.insertEdge(2, 6, 1);
+    fpbe.insertEdge(2, 5, 1);
+    fpbe.insertEdge(6, 5, 1);
+    fpbe.insertEdge(5, 12, 1);
+    fpbe.insertEdge(5, 8, 1);
+    fpbe.insertEdge(12, 2, 1);
+    fpbe.insertEdge(12, 8, 1);
+    // fpbe.insertEdge(8, 12, 1);
+
+    // put od 7 ka 8, zaobilazeci poteg 1 -> 2
+    fpbe.findPathBypassingEdge(7, 12, 1, 2);
 
 #endif // !FINDPATHBYPASSINGEDGE
 

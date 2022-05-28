@@ -98,13 +98,14 @@ public:
 
 private:
     void deleteEdgesToVertex(Vertex* _vertex);
-    void findNodes(Vertex** ptrA, Vertex** ptrB, int _dataA, int _dataB);
+    void findVertices(Vertex** ptrA, Vertex** ptrB, int _dataA, int _dataB);
     void statusReset();
     void previousReset();
 
 public:
     // zadaci
     unsigned int findShorterPath(int _start, int _frst, int _scnd);
+    unsigned int findPathBypassingEdge(int _start, int _end, int _frstBy, int _scndBy);
 
 };
 
@@ -130,7 +131,7 @@ Vertex* Graph::findVertex(int _data) {
     return ptr;
 }
 
-void Graph::findNodes(Vertex** ptrA, Vertex** ptrB,
+void Graph::findVertices(Vertex** ptrA, Vertex** ptrB,
      int _dataA, int _dataB) {
     *ptrA = nullptr, *ptrB = nullptr;
     Vertex* temp = vertices;
@@ -150,7 +151,7 @@ void Graph::findNodes(Vertex** ptrA, Vertex** ptrB,
 Edge* Graph::findEdge(int _dataA, int _dataB) {
     Vertex* ptrA = nullptr, * ptrB = nullptr;
     Vertex* temp = vertices;
-    findNodes(&ptrA, &ptrB, _dataA, _dataB);
+    findVertices(&ptrA, &ptrB, _dataA, _dataB);
     if (ptrA == nullptr || ptrB == nullptr)
         return nullptr;
     Edge* ret = ptrA->adj;
@@ -212,7 +213,7 @@ bool Graph::deleteVertex(int _data) {
 bool Graph::insertEdge(int _dataA, int _dataB, int _weight) {
     Vertex* ptrA = nullptr, * ptrB = nullptr;
     Vertex* temp = vertices;
-    findNodes(&ptrA, &ptrB, _dataA, _dataB);
+    findVertices(&ptrA, &ptrB, _dataA, _dataB);
     if (ptrA == nullptr || ptrB == nullptr)
         return false;
     Edge* newEdge = new Edge(_weight, ptrB, ptrA->adj);
@@ -223,7 +224,7 @@ bool Graph::insertEdge(int _dataA, int _dataB, int _weight) {
 
 bool Graph::deleteEdge(int _dataA, int _dataB) {
     Vertex* ptrA = nullptr, * ptrB = nullptr;
-    findNodes(&ptrA, &ptrB, _dataA, _dataB);
+    findVertices(&ptrA, &ptrB, _dataA, _dataB);
     if (ptrA == nullptr || ptrB == nullptr)
         return false;
     Edge* temp = ptrA->adj, *tempPrev = nullptr;
@@ -431,6 +432,71 @@ unsigned int Graph::findShorterPath(int _start, int _frst, int _scnd) {
         _tmpVert = s.top();
         s.pop();
         _tmpVert->visit();
+    }
+
+    return pathLen;
+
+}
+
+unsigned int Graph::findPathBypassingEdge(int _start, int _end, int _frstBy, int _scndBy) {
+
+    Vertex* _startVert = nullptr,
+        * _endVert = nullptr;
+    Vertex* _tmpVert = vertices;
+    while (_tmpVert != nullptr) {
+        if (!_startVert && _tmpVert->data == _start)
+            _startVert = _tmpVert;
+        if (!_endVert && _tmpVert->data == _end)
+            _endVert = _tmpVert;
+        _tmpVert->status = 0;   // unprocessed
+        _tmpVert->prev = nullptr;
+        _tmpVert = _tmpVert->next;
+    }
+
+    if (!_startVert || !_endVert)
+        return ~0U;
+
+    bool found = false;
+    std::queue<Vertex*> q;
+    _tmpVert = _startVert;
+    q.push(_tmpVert);
+    _tmpVert->status = 1; // processing
+    while (!q.empty()) {
+        _tmpVert = q.front();
+        q.pop();
+        _tmpVert->status = 2; // processed
+        if (_tmpVert->data == _end) {
+            found = true;
+            break;
+        }
+        Edge* _tmpAdj = _tmpVert->adj;
+        while (_tmpAdj != nullptr) {
+            if (!_tmpAdj->dest->status &&
+                !(_tmpVert->data == _frstBy &&
+                _tmpAdj->dest->data == _scndBy))
+                q.push(_tmpAdj->dest),
+                    _tmpAdj->dest->status = 1,
+                    _tmpAdj->dest->prev = _tmpVert;
+            _tmpAdj = _tmpAdj->link;
+        }
+    }
+
+    if (!found)
+        return ~0U;
+
+    unsigned int pathLen = ~0U;
+
+    std::stack<Vertex*> s;
+    while (_tmpVert != nullptr) {
+        s.push(_tmpVert);
+        _tmpVert = _tmpVert->prev;
+    }
+
+    while (!s.empty()) {
+        _tmpVert = s.top();
+        s.pop();
+        _tmpVert->visit();
+        pathLen++;
     }
 
     return pathLen;
