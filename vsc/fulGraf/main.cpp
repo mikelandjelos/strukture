@@ -239,8 +239,30 @@ int main() {
     fcivs1.insertEdge(6, 5, 1);
     // fcivs1.insertEdge(1, 12, 1);
 
-    int lenfcivs = fcivs1.findCycleIncludingVertices(8, 12);
-    std::cout << "\nCycle len: " << lenfcivs;
+    Graph fcivs2;
+
+    fcivs2.insertVertex(1);
+    fcivs2.insertVertex(2);
+    fcivs2.insertVertex(8);
+    fcivs2.insertVertex(3);
+    fcivs2.insertVertex(6);
+    fcivs2.insertVertex(5);
+    fcivs2.insertVertex(12);
+
+    fcivs2.insertEdge(1, 8, 1);
+    fcivs2.insertEdge(8, 3, 1);
+    fcivs2.insertEdge(3, 5, 1);
+    fcivs2.insertEdge(5, 12, 1);
+    fcivs2.insertEdge(12, 6, 1);
+    fcivs2.insertEdge(6, 3, 1);
+    fcivs2.insertEdge(3, 2, 1);
+    fcivs2.insertEdge(2, 1, 1);
+
+    int lenfcivs = fcivs1.findCycleIncludingVertices(0, 0);
+    std::cout << "\nCycle len 1: " << lenfcivs << "\n";
+
+    lenfcivs = fcivs2.findCycleIncludingVertices(1, 12);
+    std::cout << "\nCycle len 2: " << lenfcivs;
 
 #endif // !FINDCYCLEINCLUDINGVERTICES
 

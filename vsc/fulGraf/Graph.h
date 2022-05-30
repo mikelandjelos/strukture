@@ -671,7 +671,7 @@ unsigned int Graph::findCycleIncludingVertices(int _dataFrst, int _dataScnd) {
 
     _tmpVert = _frstVert;
     
-    while (_tmpVert->prev != nullptr)
+    while (_tmpVert != nullptr)
         s.push(_tmpVert),
         _tmpVert = _tmpVert->prev;
 
