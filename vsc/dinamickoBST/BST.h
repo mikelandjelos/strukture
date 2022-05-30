@@ -152,7 +152,7 @@ public:
     void getMinNode(BSTNode<T>* nd, BSTNode<T>** minnd);
     BSTNode<T>* maxChildSum();
     int maxChildSum(BSTNode<T>* nd, BSTNode<T>** maxnd, int& maxsum);
-    void xchgSpecificNodes(BSTNode<T>* nd);
+    void rearrangeSpecificNodes(BSTNode<T>* nd);
     void rearrangeSpecificNodes(BSTNode<T>* nd, BSTNode<T>* parent);
     //void projectRight();
     static void balance(BSTree<T>& nd, T* arr, int left, int right);
@@ -197,7 +197,7 @@ private:
 // }
 
 template <class T>
-void BSTree<T>::xchgSpecificNodes(BSTNode<T>* nd) {
+void BSTree<T>::rearrangeSpecificNodes(BSTNode<T>* nd) {
     rearrangeSpecificNodes(nd, nullptr);
 }
 

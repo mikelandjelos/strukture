@@ -135,7 +135,16 @@ brisanje:
     printTree(t1.getRoot(), null, false);
     std::cout << "\n\n";
 
-    t1.xchgSpecificNodes(t1.getRoot());
+    t1.rearrangeSpecificNodes(t1.getRoot());
+
+    t1.inorder();
+    std::cout << "\n";
+    t1.preorder();
+    std::cout << "\n";
+    t1.postorder();
+    std::cout << "\n";
+    t1.breadthTraversal();
+    std::cout << "\n";
 
     printTree(t1.getRoot(), null, false);
     std::cout << "\n\n";
