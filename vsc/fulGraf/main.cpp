@@ -9,7 +9,8 @@
 // #define TOPOLOGICAL_TEST
 // #define FINDSHORTERPATH
 // #define FINDPATHBYPASSINGEDGE
-#define FINDCYCLEINCLUDINGVERTEX
+// #define FINDCYCLEINCLUDINGVERTEX
+#define FINDCYCLEINCLUDINGVERTICES
 
 int main() {
 
@@ -211,6 +212,37 @@ int main() {
     std::cout << "\n" << fciv.findCycleIncludingVertexIterative(1);
 
 #endif // !FINDCYCLEINCLUDINGVERTEX
+
+#ifdef FINDCYCLEINCLUDINGVERTICES
+
+    Graph fcivs1;
+
+    fcivs1.insertVertex(7);
+    fcivs1.insertVertex(5);
+    fcivs1.insertVertex(2);
+    fcivs1.insertVertex(1);
+    fcivs1.insertVertex(3);
+    fcivs1.insertVertex(8);
+    fcivs1.insertVertex(6);
+    fcivs1.insertVertex(12);
+
+    fcivs1.insertEdge(7, 2, 1);
+    fcivs1.insertEdge(5, 7, 1);
+    fcivs1.insertEdge(2, 1, 1);
+    fcivs1.insertEdge(2, 3, 1);
+    fcivs1.insertEdge(1, 5, 1);
+    fcivs1.insertEdge(1, 8, 1);
+    // fcivs1.insertEdge(3, 12, 1);
+    fcivs1.insertEdge(8, 12, 1);
+    fcivs1.insertEdge(12, 6, 1);
+    fcivs1.insertEdge(6, 8, 1);
+    fcivs1.insertEdge(6, 5, 1);
+    // fcivs1.insertEdge(1, 12, 1);
+
+    int lenfcivs = fcivs1.findCycleIncludingVertices(8, 12);
+    std::cout << "\nCycle len: " << lenfcivs;
+
+#endif // !FINDCYCLEINCLUDINGVERTICES
 
     return 0;
     

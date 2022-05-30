@@ -79,7 +79,6 @@ private:
     unsigned int numOfNodes;
 
 public:
-
     Graph();
     virtual ~Graph();
 
@@ -110,10 +109,12 @@ public:
     unsigned int findPathBypassingEdge(int _start, int _end, int _frstBy, int _scndBy);
     unsigned int findCycleIncludingVertex(int _data);
     unsigned int findCycleIncludingVertexIterative(int _data);
+    unsigned int findCycleIncludingVertices(int _dataFrst, int _dataScnd);
 
 private:
     // pomocne funkcije
     void findCycleIncludingVertex(Vertex* _vertex, bool& found, int& len, int _data);
+    bool setBacktrackingPath(Vertex* _frstVert, Vertex* _scndVert);
 };
 
 Graph::Graph()
@@ -637,6 +638,94 @@ unsigned int Graph::findCycleIncludingVertexIterative(int _data) {
 
     return len;
 
+}
+
+unsigned int Graph::findCycleIncludingVertices(int _dataFrst, int _dataScnd) {
+
+    Vertex* _frstVert = nullptr,
+        * _scndVert = nullptr,
+        * _tmpVert = vertices;
+
+    while (_tmpVert != nullptr) {
+        if (!_frstVert && _tmpVert->data == _dataFrst)
+            _frstVert = _tmpVert;
+        if (!_scndVert && _tmpVert->data == _dataScnd)
+            _scndVert = _tmpVert;
+        _tmpVert->status = 0; // unprocessed
+        _tmpVert = _tmpVert->next;
+    }
+
+    if (!setBacktrackingPath(_frstVert, _scndVert))
+        return ~0U;
+
+    std::stack<Vertex*> s;
+
+    _tmpVert = _scndVert;
+
+    while (_tmpVert->prev != nullptr)
+        s.push(_tmpVert),
+        _tmpVert = _tmpVert->prev;
+
+    if (!setBacktrackingPath(_scndVert, _frstVert))
+        return ~0U;
+
+    _tmpVert = _frstVert;
+    
+    while (_tmpVert->prev != nullptr)
+        s.push(_tmpVert),
+        _tmpVert = _tmpVert->prev;
+
+    unsigned int len = 0;
+
+    while (!s.empty())
+        s.top()->visit(),
+            s.pop(),
+            len++;
+
+    return len;
+
+}
+
+bool Graph::setBacktrackingPath(Vertex* _frstVert, Vertex* _scndVert) {
+    if (!_frstVert || !_scndVert)
+        return false;
+
+    Vertex* _tmpVert = vertices;
+
+    while (_tmpVert != nullptr) {
+        if (!_frstVert && _tmpVert->data == _frstVert->data)
+            _frstVert = _tmpVert;
+        if (!_scndVert && _tmpVert->data == _scndVert->data)
+            _scndVert = _tmpVert;
+        _tmpVert->prev = nullptr;
+        _tmpVert->status = 0; // unprocessed
+        _tmpVert = _tmpVert->next;
+    }
+    
+    _tmpVert = _frstVert;
+    std::queue<Vertex*> q;
+    q.push(_tmpVert);
+    _tmpVert->status = 1; // processing
+    while (!q.empty()) {
+        _tmpVert = q.front();
+        q.pop();
+        _tmpVert->status = 2; // processed
+        Edge* _tmpAdj = _tmpVert->adj;
+        while (_tmpAdj != nullptr) {
+            if (_tmpAdj->dest == _scndVert) {
+                _tmpAdj->dest->prev = _tmpVert;
+                _tmpVert = _tmpAdj->dest;
+                return true;
+            }
+            if (_tmpAdj->dest->status == 0) {
+                q.push(_tmpAdj->dest);
+                _tmpAdj->dest->status = 1; // processing
+                _tmpAdj->dest->prev = _tmpVert;
+            }
+            _tmpAdj = _tmpAdj->link;
+        }
+    }
+    return false;
 }
 
 #endif // !GRAPH_H
