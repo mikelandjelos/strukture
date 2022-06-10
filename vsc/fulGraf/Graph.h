@@ -114,7 +114,8 @@ public:
 private:
     // pomocne funkcije
     void findCycleIncludingVertex(Vertex* _vertex, bool& found, int& len, int _data);
-    bool setBacktrackingPath(Vertex* _frstVert, Vertex* _scndVert);
+    bool setPathByBFS(Vertex* _frstVert, Vertex* _scndVert);
+    // bool setPathByDijkstra(Vertex* _frstVert, Vertex* _scndVert);
 };
 
 Graph::Graph()
@@ -655,7 +656,7 @@ unsigned int Graph::findCycleIncludingVertices(int _dataFrst, int _dataScnd) {
         _tmpVert = _tmpVert->next;
     }
 
-    if (!setBacktrackingPath(_frstVert, _scndVert))
+    if (!setPathByBFS(_frstVert, _scndVert))
         return ~0U;
 
     std::stack<Vertex*> s;
@@ -666,7 +667,7 @@ unsigned int Graph::findCycleIncludingVertices(int _dataFrst, int _dataScnd) {
         s.push(_tmpVert),
         _tmpVert = _tmpVert->prev;
 
-    if (!setBacktrackingPath(_scndVert, _frstVert))
+    if (!setPathByBFS(_scndVert, _frstVert))
         return ~0U;
 
     _tmpVert = _frstVert;
@@ -686,7 +687,7 @@ unsigned int Graph::findCycleIncludingVertices(int _dataFrst, int _dataScnd) {
 
 }
 
-bool Graph::setBacktrackingPath(Vertex* _frstVert, Vertex* _scndVert) {
+bool Graph::setPathByBFS(Vertex* _frstVert, Vertex* _scndVert) {
     if (!_frstVert || !_scndVert)
         return false;
 
@@ -727,5 +728,9 @@ bool Graph::setBacktrackingPath(Vertex* _frstVert, Vertex* _scndVert) {
     }
     return false;
 }
+
+// bool Graph::setPathByDijkstra(Vertex* _frstVert, Vertex* _scndVert) {
+    
+// }
 
 #endif // !GRAPH_H
