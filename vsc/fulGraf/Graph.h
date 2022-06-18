@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stack>
 #include <queue>
+#include <ctime>
 
 class Vertex;
 
@@ -37,6 +38,7 @@ public:
     // processed    == 2
 private:
     Vertex* prev;
+    int currPathLen;
     int indeg;
 
 public:
@@ -587,9 +589,16 @@ void Graph::findCycleIncludingVertex(Vertex* _vertex, bool& found, int& len, int
 
 unsigned int Graph::findCycleIncludingVertexIterative(int _data) {
 
+    // 1. nadji startni cvor
+    // 2. pocni dfs iz njega
+    // 3. ako dodjes do nekog cvora koji ima poteg
+    //    ka startnom, a da to nije startni => kraj algoritma
+    //    => ciklus je nadjen
+
     Vertex* _tmpVert = vertices, 
         * _startVert = nullptr;
 
+    // resetujemo graf
     while (_tmpVert != nullptr) {
         if (!_startVert && _tmpVert->data == _data)
             _startVert = _tmpVert;
@@ -598,8 +607,10 @@ unsigned int Graph::findCycleIncludingVertexIterative(int _data) {
         _tmpVert = _tmpVert->next;
     }
 
+    // ako pocetni cvor ne postoji u grafu => ne radimo nista dalje
     if (!_startVert)
         return ~0U;
+
 
     _tmpVert = _startVert;
     _tmpVert->status = 1;
@@ -614,10 +625,10 @@ unsigned int Graph::findCycleIncludingVertexIterative(int _data) {
         _tmpVert->status = 2; // processed
         Edge* _tmpAdj = _tmpVert->adj;
         while (_tmpAdj != nullptr) {
+            // ako smo dosli do cvora koji pokazuje na cvor od koga smo
+            // zapoceli DFS, i to nije sam taj cvor => nasli smo ciklus
             if (_tmpAdj->dest == _startVert && _tmpVert != _startVert) {
                 found = true;
-                // _tmpAdj->dest->prev = _tmpVert;
-                // _tmpVert = _tmpAdj->dest;
                 break;
             }
             else if (_tmpAdj->dest->status == 0)
@@ -628,9 +639,11 @@ unsigned int Graph::findCycleIncludingVertexIterative(int _data) {
         }
     }
 
+    // ako nije nadjen izadji i vrati UINT32_MAX
     if (!found)
         return ~0U;
 
+    // radimo backtracking
     while (_tmpVert != nullptr) {
         _tmpVert->visit();
         len++;
